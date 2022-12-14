@@ -16,6 +16,22 @@ Notice that the order of the output and the order of the triplets does not matte
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        
+        //brute force solution; iterate through all elements in the given vector, O(N^3);
+        //not able to handle duplication
+        std::vector<vector<int>> res;
+        for (int l = 0; l < nums.size(); l++){
+            for (int r = l+1; r < nums.size(); r++){
+                for (int i= l +2; i < nums.size(); i++){
+                    if (nums[l]+nums[r]+nums[i]==0){
+                        vector<int> temp = {nums[l], nums[r], nums[i]};
+                        res.push_back(temp);
+                    }else{
+                        continue;
+                    }
+                }
+                
+            }
+        }
+        return res;
     }
 };
