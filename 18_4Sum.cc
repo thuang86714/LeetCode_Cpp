@@ -17,9 +17,9 @@ public:
         std::sort(nums.begin(), nums.end());
         if (nums.size()<4){return res;}
         for (int i = 0; i < nums.size(); i++){// even  for NSum, the logic is the same
-            int target_of_3 = target - nums[i];
+            long long int target_of_3 = (long long)target - (long long)nums[i];
             for (int j = i+1; j< nums.size(); j++){
-                int target_of_2 = target_of_3 - nums[j];
+                long long int target_of_2 = (long long)target_of_3 - (long long)nums[j];
                 int front = j+1;
                 int back = nums.size()-1;
                 while (front < back){
