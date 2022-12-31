@@ -31,6 +31,7 @@ private://as a good habit
             if (i != begin && nums[i]==nums[begin])continue;//preventing duplicate
             swap(nums[i], nums[begin]);
             recursive(nums, begin+1, size, res);
+            //This comparison will not work if you swap back.
         }
     }
 };
