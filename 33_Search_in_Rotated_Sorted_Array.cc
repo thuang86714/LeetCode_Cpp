@@ -24,7 +24,8 @@ public:
         int l= 0; 
         int r = nums.size()-1;
         //binary search
-        while(l <= r){
+        
+        while(l <= r){// "=" operator is for nums.size()=1
             int mid = (l+r)/2;
             if (nums[mid]==target){
                 return mid;
