@@ -17,6 +17,7 @@ These are the only two combinations.*/
 class Solution {
 public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
         vector<int> temp;
         vector<vector<int>> res;
         backtrack(candidates, target, temp, res, 0);
