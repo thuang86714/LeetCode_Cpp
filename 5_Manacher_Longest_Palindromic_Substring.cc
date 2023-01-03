@@ -23,7 +23,9 @@ public:
             }
         }
         center = max_element(dp.begin(), dp.end()) - dp.begin();
+        //max_element(): Returns an iterator pointing to the element 
+        //with the largest value in the range [first,last).
         return s.substr((center - dp[center])/2, dp[center]);
-}
+    }
 
-}
+};
