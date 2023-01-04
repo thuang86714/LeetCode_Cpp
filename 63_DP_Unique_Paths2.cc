@@ -20,14 +20,18 @@ There are two ways to reach the bottom-right corner:
 1. Right -> Right -> Down -> Down
 2. Down -> Down -> Right -> Right*/
 //credit to All-Mighty archit91, where time complexity O(m*n) and space complexity O(m*n)
-int uniquePathsWithObstacles(vector<vector<int>>& grid) {
-	int m = size(grid), n = size(grid[0]);
-	vector<vector<int> > dp (m + 1, vector<int>(n + 1));
-    dp[0][1] = 1;
-    for(int i = 1; i <= m; i++)
-        for(int j = 1; j <= n; j++)            
-			// dp[i][j] = sum of unique paths for top and left cell 
-            //(cells from which we reach current one)
-            dp[i][j] = !grid[i - 1][j - 1] ? dp[i - 1][j] + dp[i][j - 1] : 0;
-    return dp[m][n];
-}
+class Solution{ 
+public:    
+    int uniquePathsWithObstacles(vector<vector<int>>& grid) {
+	    int m = size(grid), n = size(grid[0]);
+	    vector<vector<int> > dp (m + 1, vector<int>(n + 1));//we add 1 padded column and 1 padded row
+        dp[0][1] = 1;//denoted that we have exact one to reach the starting point(ie. grid[0][0]),
+        //dp[1][0]= 1 would work too
+        for(int i = 1; i <= m; i++)
+            for(int j = 1; j <= n; j++)            
+			    // dp[i][j] = sum of unique paths for top and left cell (cells from 
+                //which we reach  current one)
+                dp[i][j] = !grid[i - 1][j - 1] ? dp[i - 1][j] + dp[i][j - 1] : 0;//this means if grid[i-1][j-1] is obstacle(where valuse would ==1). If so, then dp[i][j] would be 0;
+        return dp[m][n];//dp[m][n] representing the end point (ie. grid[m-1][n-1])
+    }
+};
