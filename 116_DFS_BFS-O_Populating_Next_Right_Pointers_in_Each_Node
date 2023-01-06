@@ -1,0 +1,73 @@
+//credit still goes to archit91
+/*
+https://leetcode.com/problems/populating-next-right-pointers-in-each-node/solutions/1654181/c-python-java-simple-solution-w-images-explanation-bfs-dfs-o-1-optimized-bfs/
+DFS:
+We can also populate the next pointers recursively using DFS. This is slightly different logic than above but relies on the fact that the given tree is a perfect binary tree.
+
+In the above solution, we had access to right nodes since we traversed in level-order. But in DFS, once we go to the next level, we cant get access to right node. So, we must update next pointers of the child of each node from the its parent's level itself. Thus at each recursive call -
+
+If child node exists:
+
+assign next of left child node as right child node: root -> left -> next = root -> right. 
+Note that, if once child exists, the other exists as well. assign next of right child node as 
+left child of root's next (if root's next exists): root -> right -> next = root -> next -> left.
+How? We need right immediate node of right child. This wont exist if current root's next node 
+doesnt exists. If next node of current root is present (the next pointer of root would already 
+be populated in above level) , the right immediate node of root's right child must 
+be root's next's left child because if child of root exists, then the child of root's next must 
+also exist.
+If child node doesn't exist, we have reached the last level, 
+we can directly return since there's no child nodes to populate their next pointers
+
+The process is very similar to the one illustrated in the image below with just 
+the difference that we are traversing with DFS instead of BFS shown below.
+Time Complexity : O(N), each node is only traversed once
+Space Complexity : O(logN), required for recursive stack. 
+The maximum depth of recursion is equal to the height of tree which in this case of perfect
+ binary tree is equal to O(logN)
+*/
+class Solution {
+public:
+    Node* connect(Node* root) {
+        if(!root) return nullptr;
+        auto L = root -> left, R = root -> right, N = root -> next;
+        if(L) {
+            L -> next = R;                                // next of root's left is assigned as root's right
+            if(N) R -> next = N -> left;                  // next of root's right is assigned as root's next's left (if root's next exist)
+            connect(L);                                   // recurse left  - simple DFS 
+            connect(R);                                   // recurse right
+        }
+        return root;
+    }
+};
+
+/*
+BFS-Space-Optimized Approach
+This is a combination of logic of above logics- we will traverse in BFS manner but populate 
+the next pointers of bottom level just as we did in the DFS solution.
+
+Usually standard DFS/BFS takes O(N) space, but since we are given the next pointers in each node,
+ we can use them to space-optimize our traversal to O(1).
+
+We first populate the next pointers of child nodes of current level. This makes it possible to
+ traverse the next level without using a queue. To populate next pointers of child, the exact same
+  logic as above is used
+We simply traverse to root's left child and repeat the process - traverse current level, fill next
+ pointers of child nodes and then again update root = root -> left. So, we are basically performing
+  standard BFS traversal in O(1) space by using next pointers to our advantage
+The process continues till we reach the last level of tree*/
+class Solution {
+public:
+    Node* connect(Node* root) {
+        auto head = root;
+        for(; root; root = root -> left) 
+            for(auto cur = root; cur; cur = cur -> next)   // traverse each level - it's just BFS taking advantage of next pointers          
+                if(cur -> left) {                          // update next pointers of children if they exist               
+                    cur -> left -> next = cur -> right;
+                    if(cur -> next) cur -> right -> next = cur -> next -> left;
+                }
+                else break;                                // if no children exist, stop iteration                                                  
+        
+        return head;
+    }
+};
