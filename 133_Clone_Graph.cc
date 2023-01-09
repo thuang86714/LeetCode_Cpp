@@ -52,11 +52,11 @@ public:
         return dfs(node, mp);
     }
 private:
-    Node* dfs(Node* head, unordered_map<Node*, Node*>& mp){
+    Node* dfs(Node* node, unordered_map<Node*, Node*>& mp){// pass by reference is up-most crucial
         vector<Node*> neighbor;
-        Node* clone = new Node(head->val);
-        mp[head] = clone;
-        for (auto it:head->neighbors){
+        Node* clone = new Node(node->val);
+        mp[node] = clone;
+        for (auto it:node->neighbors){
             if(mp.find(it) != mp.end()){//meanning this node is traversed and cloned
                 neighbor.push_back(mp[it]);
             }else{
