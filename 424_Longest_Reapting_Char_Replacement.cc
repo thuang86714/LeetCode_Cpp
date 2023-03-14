@@ -24,6 +24,6 @@ public:
                 count[s[i - res]]--;
             }
         }
-        return res;
+        return res;//return the max length of sliding window which is equal to maxf + k
     }
 };
