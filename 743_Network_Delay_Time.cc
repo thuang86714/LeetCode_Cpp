@@ -11,6 +11,13 @@ public:
         vector<int> dist(n+1, INT_MAX);
         dist[k] = 0;
         for(int i = 0; i < n; i++){
+        /*
+        the algorithm calculates the shortest paths in a bottom-up manner. 
+        It first calculates the shortest distances which have at most one edge in the path. 
+        Then, it calculates the shortest paths with at-most 2 edges, and so on. 
+        After the i-th iteration of the outer loop, the shortest paths with at most i edges are 
+        calculated. There can be maximum |V| – 1 edges in any simple path, 
+        that is why the outer loop runs |v| – 1 times.*/
             for(vector<int> t:times){
                 int u = t[0], v = t[1], w = t[2];
                 if(dist[u] != INT_MAX && dist[v] > dist[u] + w){
